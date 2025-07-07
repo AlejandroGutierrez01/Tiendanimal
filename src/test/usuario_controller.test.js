@@ -348,7 +348,7 @@ describe("Controladores de Usuario", () => {
             Usuario.findByIdAndDelete.mockResolvedValue({ imagen_id: "abc" });
             cloudinary.uploader.destroy.mockResolvedValue({});
             req.params = { id: "123" }
-
+            req.UsuarioBDD = { _id: "123" };
             await eliminarUsuario(req, res);
             expect(res.status).toHaveBeenCalledWith(200);
         });

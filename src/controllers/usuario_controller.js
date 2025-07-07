@@ -124,7 +124,7 @@ const nuevoPassword = async (req, res) => {
         if (!usuarioBDD) return res.status(404).json({ msg: "Token inválido" });
         if (usuarioBDD?.token !== token) return res.status(404).json({ msg: "Token inválido" });
         if (usuarioBDD?.tokenExpiracion && usuarioBDD.tokenExpiracion < Date.now()) return res.status(403).json({ msg: "El token ha expirado, por favor envía una nueva solicitud" })
-        const mismaPassword = await usuarioBDD.matchPassword(password)
+        const mismaPassword = await usuarioBDD.compararPassword(password)
         if(mismaPassword) return res.status(400).json({ msg: "La nueva contraseña no puede ser igual a la anterior" })
         usuarioBDD.token = null;
         usuarioBDD.tokenExpiracion = null
@@ -260,6 +260,7 @@ const listarUsuarios = async (req, res) => {
 const eliminarUsuario = async (req, res) => {
     const { id } = req.params
     try {
+        if (req.UsuarioBDD._id.toString() !== id) return res.status(403).json({ msg: "No tienes permitido eliminar otros usuarios" });
         const usuario = await Usuario.findByIdAndDelete(id)
         if (!usuario) return res.status(404).json({ msg: "Usuario no encontrado" })
         if (usuario.imagen_id) {
