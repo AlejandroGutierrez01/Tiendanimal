@@ -27,9 +27,9 @@ API REST para gestión de productos y usuarios de **Tiendanimal**, con la recome
    Crea un archivo `.env` en la raíz con las siguientes variables:
 
    ```env
-   MONGODB_URI_PRODUCTION=<tu_uri_mongodb>
-   GEMINI_API=<tu_uri_mongodb>
-   JWT_SECRET = tu_secreto_jwt
+   MONGODB_URI_PRODUCTION = tu_uri_mongodb
+   GEMINI_API = api_key_gemini
+   JWT_SECRET = jwt_secreto
    CLOUDINARY_CLOUD_NAME = nombre_cloudinary
    CLOUDINARY_API_KEY = api_key_cloudinary
    CLOUDINARY_API_SECRET = api_secret_cloudinary
