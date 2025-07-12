@@ -10,6 +10,13 @@ const registrarMascota = async (req, res) => {
     if (Object.values(req.body).includes("")) {
         return res.status(400).json({ msg: "Todos los campos son obligatorios" });
     }
+    if (!req.UsuarioBDD || !req.UsuarioBDD._id)  return res.status(400).json({ msg: "No se ha encontrado un usuario asociado." });
+    
+
+    const cantidadMascotas = await Mascota.countDocuments({ usuario: req.UsuarioBDD._id })
+    console.log(cantidadMascotas)
+    if (cantidadMascotas >= 3) return res.status(400).json({ msg: "Lo sentimos, no puedes registrar más de 3 mascotas." });
+    
     try {
         let imagenurl = "";
         let publicid = "";
@@ -113,6 +120,13 @@ const eliminarMascota = async (req, res) => {
         const mascota = await Mascota.findById(id).findOne({ usuario: req.UsuarioBDD._id });
         if (!mascota) {
             return res.status(403).json({ msg: "No tienes permisos para eliminar esta mascota o no se ha encontrado el registro" });
+        }
+        if(mascota.dietaTiempo){
+            const ahora = new Date();
+            const diferenciaDias = Math.floor((ahora - mascota.dietaTiempo) / (1000 * 60 * 60 * 24));
+            if (diferenciaDias < 7) {
+                return res.status(400).json({ msg: "No puedes eliminar una mascota con dieta generada por los proximos 7 días" + `, faltan ${7 - diferenciaDias} día(s).`    });
+            }
         }
         if (mascota.imagen_id) {
             await cloudinary.uploader.destroy(mascota.imagen_id);

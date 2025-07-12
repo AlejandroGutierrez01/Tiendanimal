@@ -1,0 +1,92 @@
+
+config:
+  target: "http://localhost:3000/api"
+  phases:
+    - duration: 60
+      arrivalRate: 10
+scenarios:
+  - name: "login"
+    flow:
+      - post:
+          url: "/login"
+          json:
+            email: "admin@test.com"
+            password: "AdminPassword1_"
+	
+config:
+  target: "http://localhost:3000/api"
+  phases:
+    - duration: 60
+      arrivalRate: 10
+scenarios:
+  - name: "perfil_admin"
+    flow:
+      - get:
+          url: "/perfil"
+          headers:
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njg2YWEwNWQ3ODhhYTExOWYzYWNiOCIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJpYXQiOjE3NTE4NDUwNzIsImV4cCI6MTc1NDUyMzQ3Mn0.R4Jbufc_z6puLWvy0FOmO01n7-FFrog15Sq1_9BSl4k"
+
+config:
+  target: "http://localhost:3000/api"
+  phases:
+    - duration: 60
+      arrivalRate: 10
+scenarios:
+  - name: "actualizar_perfil_admin"
+    flow:
+      - put:
+          url: "/perfil/68686aa05d788aa119f3acb8"
+          headers:
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njg2YWEwNWQ3ODhhYTExOWYzYWNiOCIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJpYXQiOjE3NTE4NDUwNzIsImV4cCI6MTc1NDUyMzQ3Mn0.R4Jbufc_z6puLWvy0FOmO01n7-FFrog15Sq1_9BSl4k"
+          json:
+            nombre: "Nuevo Nombre"
+            apellido: "Nuevo Apellido"
+            email: "admin@test.com"
+            telefono: "0923456789"
+            direccion: "Nueva Direccion"
+
+config:
+  target: "http://localhost:3000/api"
+  phases:
+    - duration: 60
+      arrivalRate: 3
+scenarios:
+  - name: "registro_mascota"
+    flow:
+      - post:
+          url: "/mascota/registro"
+          headers:
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NmFkNTQ1YjdhOWJlOTBkMzhjNDAyYSIsInJvbCI6IlVzdWFyaW8iLCJpYXQiOjE3NTE4NTIzNjcsImV4cCI6MTc1NDUzMDc2N30.YS8q4VDwGqhLYJY-OzTpiimPt6S96TRU3f2XgR1-awo"
+          json:
+            nombre: "Fido"
+            edad: 3
+            raza: "Labrador"
+            peso: 30
+            enfermedades: "ninguna"
+            actividad: "Baja"
+
+config:
+  target: "http://localhost:3000/api"
+  phases:
+    - duration: 60
+      arrivalRate: 3
+scenarios:
+  - name: "listar_mascota"
+    flow:
+      - get:
+          url: "/mascota/listar"
+          headers:
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NmFkNTQ1YjdhOWJlOTBkMzhjNDAyYSIsInJvbCI6IlVzdWFyaW8iLCJpYXQiOjE3NTE4NTIzNjcsImV4cCI6MTc1NDUzMDc2N30.YS8q4VDwGqhLYJY-OzTpiimPt6S96TRU3f2XgR1-awo"
+            
+config:
+  target: "http://localhost:3000/api"
+  phases:
+    - duration: 60        
+      arrivalRate: 10     
+scenarios:
+  - name: "listar_productos"
+    flow:
+      - get:
+          url: "/productos/listar"
+          headers:
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njg2YWEwNWQ3ODhhYTExOWYzYWNiOCIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJpYXQiOjE3NTE4NDUwNzIsImV4cCI6MTc1NDUyMzQ3Mn0.R4Jbufc_z6puLWvy0FOmO01n7-FFrog15Sq1_9BSl4k"

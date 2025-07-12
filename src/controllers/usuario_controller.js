@@ -289,31 +289,18 @@ const obtenerFavoritos = async (req, res) => {
 
 const agregarFavorito = async (req, res) => {
     const productoId = req.params.id;
-    if (!productoId) {
-        return res.status(400).json({ msg: "Debes proporcionar el ID del producto" });
-    }
-
+    if (!productoId) return res.status(400).json({ msg: "Debes proporcionar el ID del producto" });    
+    if (!mongoose.Types.ObjectId.isValid(productoId)) return res.status(400).json({ msg: "ID de producto inválido" });
     try {
         const producto = await Producto.findById(productoId);
-        if (!producto) {
-            return res.status(404).json({ msg: "Producto no encontrado" });
-        }
-
+        if (!producto) return res.status(404).json({ msg: "Producto no encontrado" });        
         const usuario = await Usuario.findById(req.UsuarioBDD._id);
-
-        if (usuario.favoritos.some(id => id.toString() === productoId)) {
-            return res.status(400).json({ msg: "El producto ya está en favoritos" });
-        }
-
-        if (usuario.favoritos.length >= 15) {
-            return res.status(400).json({ msg: "Máximo de 15 productos favoritos alcanzado" });
-        }
+        if (usuario.favoritos.some(id => id.toString() === productoId)) return res.status(400).json({ msg: "El producto ya está en favoritos" });
+        if (usuario.favoritos.length >= 15)  return res.status(400).json({ msg: "Máximo de 15 productos favoritos alcanzado" });
 
         usuario.favoritos.push(productoId);
         await usuario.save();
-
-        const usuarioActualizado = await Usuario.findById(req.UsuarioBDD._id)
-            .populate("favoritos", "-__v -createdAt -updatedAt");
+        const usuarioActualizado = await Usuario.findById(req.UsuarioBDD._id).populate("favoritos", "-__v -createdAt -updatedAt");
 
         res.status(200).json({ msg: "Producto agregado a favoritos", favoritos: usuarioActualizado.favoritos });
     } catch (error) {
@@ -334,8 +321,7 @@ const eliminarFavorito = async (req, res) => {
         usuario.favoritos = usuario.favoritos.filter(id => id.toString() !== productoId);
         await usuario.save();
 
-        const usuarioActualizado = await Usuario.findById(req.UsuarioBDD._id)
-            .populate("favoritos", "-__v -createdAt -updatedAt");
+        const usuarioActualizado = await Usuario.findById(req.UsuarioBDD._id).populate("favoritos", "-__v -createdAt -updatedAt");
 
         res.status(200).json({ msg: "Producto eliminado de favoritos", favoritos: usuarioActualizado.favoritos });
     } catch (error) {
