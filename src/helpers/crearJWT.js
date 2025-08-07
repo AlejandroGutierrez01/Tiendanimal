@@ -6,7 +6,7 @@ import dotenv from "dotenv"
 dotenv.config()
 
 const generarJWT = (id, rol) =>{
-    return jwt.sign({id, rol},process.env.JWT_SECRET,{expiresIn:'31d'})
+    return jwt.sign({id, rol},process.env.JWT_SECRET,{expiresIn:'1d'})
 }
 const verificarAutenticacion = async (req, res, next) => {
     if (!req.headers.authorization) {
