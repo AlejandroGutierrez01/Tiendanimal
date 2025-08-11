@@ -1,6 +1,6 @@
-# Tiendanimal 
+# 📁 Desarrollo de sistema de gestión de productos para tiendas de mascotas con recomendación de dietas saludables mediante inteligencia artificial.
 
-API REST para gestión de productos y usuarios de **Tiendanimal**, con la recomendación de dietas saludables para mascotas, enfocada en perros.
+API REST para gestión de productos y usuarios, con la recomendación de dietas saludables para mascotas, enfocada en perros.
 
 ## Tecnologías Utilizadas 🛠️
 
